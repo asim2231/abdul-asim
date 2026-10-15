@@ -1,0 +1,272 @@
+<title>Abdul Asim Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: one left-aligned column joined by a thin "flow line" with a node at every section, like a workflow canvas. */
+:root {
+  --bg: #f2f5f8;
+  --surface: #ffffff;
+  --fg: #111d28;
+  --muted: #566677;
+  --line: #d3dce5;
+  --accent: #2438e8;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3e8ff;
+  --f-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f161d; --surface: #16202a; --fg: #e8eef4; --muted: #96a6b6; --line: #28364380;
+    --accent: #8fa0ff; --accent-ink: #0f161d; --accent-soft: #1c2650;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f161d; --surface: #16202a; --fg: #e8eef4; --muted: #96a6b6; --line: #28364380;
+  --accent: #8fa0ff; --accent-ink: #0f161d; --accent-soft: #1c2650;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 56px 72px; }
+.mono { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+/* flow line */
+.flow { position: relative; padding-left: 36px; }
+.flow::before { content: ""; position: absolute; left: 6px; top: 12px; bottom: 12px; width: 2px; background: var(--line); }
+section { position: relative; margin-bottom: 64px; }
+section::before {
+  content: ""; position: absolute; left: -36px; top: 8px; width: 14px; height: 14px; border-radius: 4px;
+  background: var(--bg); border: 2px solid var(--accent);
+}
+section.hero::before { background: var(--accent); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(40px, 8vw, 76px); font-weight: 700; letter-spacing: -.02em; }
+h2 { font-size: clamp(26px, 4.2vw, 36px); font-weight: 700; letter-spacing: -.01em; margin: 6px 0 22px; }
+h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+p { margin: 0 0 14px; max-width: 64ch; }
+
+/* hero */
+.photo { width: 132px; height: 132px; border-radius: 50%; border: 3px solid var(--accent); background: var(--accent-soft); display: grid; place-items: center; overflow: hidden; margin-bottom: 20px; font: 700 40px var(--f-display); color: var(--accent); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fact a { color: var(--accent); }
+.lede { font-size: clamp(18px, 2.4vw, 22px); color: var(--fg); margin: 18px 0 26px; max-width: 34ch; }
+.role { margin-top: 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 40px; }
+.btn { font: 600 15px var(--f-body); padding: 12px 18px; border-radius: 8px; border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink); text-decoration: none; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.pipe { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; align-items: stretch; }
+.node { background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 12px 14px; position: relative; min-width: 0; }
+.node b { display: block; font-family: var(--f-display); font-size: 16px; margin-top: 4px; line-height: 1.2; }
+.node small { color: var(--muted); font-size: 13px; display: block; margin-top: 4px; line-height: 1.35; }
+.node.hot { border-color: var(--accent); background: var(--accent-soft); }
+.pipe .node:not(:last-child)::after { content: ""; position: absolute; right: -13px; top: 50%; width: 12px; height: 2px; background: var(--accent); }
+.pipe .node { margin-right: 12px; }
+.pipe .node:last-child { margin-right: 0; }
+
+/* capability cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px; padding: 22px; min-width: 0; }
+.card p { margin: 0 0 12px; color: var(--muted); font-size: 15.5px; }
+.card ul { margin: 0; padding-left: 18px; font-size: 15px; }
+.card li { margin-bottom: 4px; }
+
+/* process */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px; counter-reset: s; }
+.steps li { border-top: 3px solid var(--accent); padding-top: 12px; counter-increment: s; }
+.steps li::before { content: "Step " counter(s); font: 500 12.5px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+.steps b { font-family: var(--f-display); font-size: 19px; display: block; margin-bottom: 4px; }
+.steps span { color: var(--muted); font-size: 15px; display: block; }
+
+/* stack */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { font: 500 14px var(--f-mono); padding: 8px 12px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 8px; }
+.chip.main { border-color: var(--accent); background: var(--accent-soft); }
+
+/* work */
+.work { display: grid; gap: 0; border: 1.5px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.row { display: grid; grid-template-columns: 190px 1fr; gap: 6px 28px; padding: 22px; border-bottom: 1.5px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row h3 { margin: 0; font-size: 19px; }
+.row p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.row p b { color: var(--fg); font-weight: 600; }
+
+/* background + contact */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; }
+.fact { border-left: 3px solid var(--accent); padding-left: 14px; min-width: 0; }
+.fact b { display: block; font-family: var(--f-display); font-size: 18px; line-height: 1.25; }
+.fact span { color: var(--muted); font-size: 15px; }
+.contact-box { background: var(--surface); border: 1.5px solid var(--line); border-radius: 12px; padding: 24px; display: grid; gap: 14px; }
+.addr { font: 500 18px var(--f-mono); overflow-wrap: anywhere; user-select: all; }
+footer { color: var(--muted); font-size: 13.5px; padding-top: 8px; }
+
+@media (max-width: 760px) {
+  .wrap { padding-block: 36px 56px; }
+  .pipe { grid-template-columns: 1fr; gap: 0; }
+  .pipe .node { margin-right: 0; margin-bottom: 14px; }
+  .pipe .node:not(:last-child)::after { right: auto; left: 22px; top: auto; bottom: -14px; width: 2px; height: 14px; }
+  .row { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .card { transition: transform .15s ease, border-color .15s ease; }
+  .btn:hover, .card:hover { transform: translateY(-2px); }
+  .card:hover { border-color: var(--accent); }
+}
+</style>
+
+<div class="wrap">
+  <div class="flow">
+
+    <section class="hero">
+      <div class="photo" role="img" aria-label="Portrait of Abdul Asim"><span>AA</span></div>
+      <div class="mono">Portfolio</div>
+      <h1>Abdul Asim</h1>
+      <div class="mono role">AI automation specialist &middot; Voice agents &amp; workflows</div>
+      <p class="lede">I build voice agents and automation workflows that keep real client businesses running.</p>
+      <div class="actions">
+        <a class="btn" href="#contact">Get in touch</a>
+        <a class="btn ghost" href="https://linkedin.com/in/abdul-asim" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+
+      <div class="pipe" aria-label="Example automation flow">
+        <div class="node"><span class="mono">Trigger</span><b>Lead or booking</b><small>Form, funnel or webhook</small></div>
+        <div class="node"><span class="mono">Orchestrate</span><b>n8n workflow</b><small>Logic, checks, integrations</small></div>
+        <div class="node hot"><span class="mono">Act</span><b>Voice agent call</b><small>Talks to the customer</small></div>
+        <div class="node"><span class="mono">Record</span><b>GoHighLevel CRM</b><small>Contact, tags, pipeline</small></div>
+        <div class="node"><span class="mono">Notify</span><b>Team alert</b><small>Outcome to the right people</small></div>
+      </div>
+    </section>
+
+    <section id="build">
+      <div class="mono">What I build</div>
+      <h2>Systems customers talk to and teams rely on</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Voice agents</h3>
+          <p>AI agents that call or answer customers, confirm details, handle questions and hand clean notes to the team.</p>
+          <ul><li>Agent setup and call flows</li><li>Testing with real call scenarios</li><li>Deployment for live customer use</li></ul>
+        </div>
+        <div class="card">
+          <h3>n8n workflows</h3>
+          <p>Multi-step workflows that connect the tools a business already uses and run without anyone watching.</p>
+          <ul><li>Triggers, branching and integrations</li><li>Debugging and optimization</li><li>Built for real-world volume</li></ul>
+        </div>
+        <div class="card">
+          <h3>GoHighLevel systems</h3>
+          <p>The customer-facing side: capture the lead, track it, and move it through the pipeline.</p>
+          <ul><li>Sales funnels and forms</li><li>CRM pipelines and contacts</li><li>Automations on tags and stages</li></ul>
+        </div>
+        <div class="card">
+          <h3>Chatbots</h3>
+          <p>Conversational assistants that answer, qualify and route inbound customers.</p>
+          <ul><li>Chatbot design and deployment</li><li>Lead capture and follow-up</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="mono">How a project runs</div>
+      <h2>From a client request to a working system</h2>
+      <ol class="steps">
+        <li><b>Requirements</b><span>Talk to the client in plain English and pin down what must happen.</span></li>
+        <li><b>Build</b><span>Funnels, workflows and agents wired together in GoHighLevel and n8n.</span></li>
+        <li><b>Test and debug</b><span>Run real scenarios end to end and fix what breaks before launch.</span></li>
+        <li><b>Support</b><span>Explain how it works and keep optimizing once it is live.</span></li>
+      </ol>
+    </section>
+
+    <section id="stack">
+      <div class="mono">Tools</div>
+      <h2>The stack I work in</h2>
+      <div class="chips">
+        <span class="chip main">GoHighLevel</span>
+        <span class="chip main">n8n</span>
+        <span class="chip main">Voice AI agents</span>
+        <span class="chip">Chatbots</span>
+        <span class="chip">Webhooks &amp; APIs</span>
+        <span class="chip">CRM pipelines</span>
+        <span class="chip">Forms &amp; funnels</span>
+        <span class="chip">No-code / low-code</span>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="mono">Delivered work</div>
+      <h2>What I have shipped for clients</h2>
+      <div class="work">
+        <div class="row">
+          <h3>Voice agents</h3>
+          <p>Configured, tested and deployed voice agents that handle live customer interactions for client businesses, working inside <b>Autoloopers</b>.</p>
+        </div>
+        <div class="row">
+          <h3>Complex workflows</h3>
+          <p>Designed n8n workflows that join several systems into one process, then tested and debugged them against <b>real client use cases</b>.</p>
+        </div>
+        <div class="row">
+          <h3>GHL builds</h3>
+          <p>Sales funnels, lead-capture forms and CRM setups in <b>GoHighLevel</b>, ready for the team to use day to day.</p>
+        </div>
+        <div class="row">
+          <h3>Client communication</h3>
+          <p>Worked directly with team members and clients in English to explain workflows, collect requirements and support customer-facing automations.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="mono">Background</div>
+      <h2>About me</h2>
+      <div class="facts">
+        <div class="fact"><b>Phone</b><span><a href="tel:+923115140237">+92 311 5140237</a></span></div>
+        <div class="fact"><b>Email</b><span><a href="mailto:abdulasim643@gmail.com">abdulasim643@gmail.com</a></span></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="mono">Contact</div>
+      <h2>Have a workflow or voice agent in mind?</h2>
+      <div class="contact-box">
+        <div class="addr" id="mail">abdulasim643@gmail.com</div>
+        <div class="actions" style="margin:0">
+          <button class="btn" id="copy" type="button">Copy email</button>
+          <a class="btn ghost" href="https://linkedin.com/in/abdul-asim" target="_blank" rel="noopener">linkedin.com/in/abdul-asim</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>Abdul Asim &middot; AI automation specialist</footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy');
+  var mail = document.getElementById('mail');
+  btn.addEventListener('click', function () {
+    var text = mail.textContent.trim();
+    function done() { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy email'; }, 1800); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(mail);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Press Ctrl+C';
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
